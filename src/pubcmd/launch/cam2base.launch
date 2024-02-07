@@ -1,0 +1,4 @@
+<launch>
+<node pkg="tf" type="static_transform_publisher" name="camera_link_to_base_link"
+        args="0 0 0 0 0 0 /base_link /t265_link 1" />   
+</launch>
