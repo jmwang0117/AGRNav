@@ -1,0 +1,1 @@
+python3 /root/AGRNav/src/perception/SCONet/network/train.py --cfg /root/AGRNav/src/perception/SCONet/SSC_configs/routines/SCONet.yaml --dset_root /root/datasets/semantic_kitti
