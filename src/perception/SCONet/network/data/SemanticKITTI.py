@@ -1,5 +1,5 @@
 from torch.utils.data import Dataset
-from glob import glob
+import glob
 import os
 import numpy as np
 import yaml
@@ -52,58 +52,45 @@ class SemanticKITTI_dataloader(Dataset):
     self.nbr_files = len(self.filepaths['3D_OCCUPANCY'])  # TODO: Pass to something generic
 
     return
-
+  
+  # def next_file_batches(self, dataset_dir, file_pattern, batch_size=8):
+  #     filepaths = sorted(glob.glob(os.path.join(dataset_dir, file_pattern)))
+  #     start_index = 0
+  #     while start_index < len(filepaths):
+  #         yield filepaths[start_index:start_index + batch_size]
+  #         start_index += batch_size
+          
+        
   def get_filepaths(self, modality):
-    '''
-    Set modality filepaths with split according to phase (train, val, test)
-    '''
+      '''
+      Set modality filepaths with split according to phase (train, val, test)
+      '''
 
-    sequences = list(sorted(glob(os.path.join(self.root_dir, 'dataset', 'sequences', '*')))[i] for i in self.split[self.phase])
+      if modality == '3D_OCCUPANCY':
+          self.filepaths['3D_OCCUPANCY'] = []  # Clear the file paths before each iteration
+          
+          dataset_dir =  "/root/AGRNav/src/planner/plan_manage/raw_data/voxels"
+          file_pattern = '*.bin'
 
-    if self.phase != 'test':
+          # Get all file paths in the directory and sort them
+          filepaths = sorted(glob.glob(os.path.join(dataset_dir, file_pattern)))
+          # import pdb
+          # pdb.set_trace()
+          # Only consider the first batch_size files
+          batch_size = 6
+          self.filepaths['3D_OCCUPANCY'] = filepaths[:batch_size]
+          
+          # Remove the processed files from the list
+          #filepaths = filepaths[batch_size:]
 
-      if modality == '3D_LABEL':
-        self.filepaths['3D_LABEL'] = {'1_1': [], '1_2': [], '1_4': [], '1_8': []}
-        self.filepaths['3D_INVALID'] = {'1_1': [], '1_2': [], '1_4': [], '1_8': []}
-        for sequence in sequences:
-          assert len(os.listdir(sequence)) > 0, 'Error, No files in sequence: {}'.format(sequence)
-          # Scale 1:1
-          self.filepaths['3D_LABEL']['1_1'] += sorted(glob(os.path.join(sequence, 'voxels', '*.label')))
-          self.filepaths['3D_INVALID']['1_1'] += sorted(glob(os.path.join(sequence, 'voxels', '*.invalid')))
-          # Scale 1:2
-          self.filepaths['3D_LABEL']['1_2'] += sorted(glob(os.path.join(sequence, 'voxels', '*.label_1_2')))
-          self.filepaths['3D_INVALID']['1_2'] += sorted(glob(os.path.join(sequence, 'voxels', '*.invalid_1_2')))
-          # Scale 1:4
-          self.filepaths['3D_LABEL']['1_4'] += sorted(glob(os.path.join(sequence, 'voxels', '*.label_1_4')))
-          self.filepaths['3D_INVALID']['1_4'] += sorted(glob(os.path.join(sequence, 'voxels', '*.invalid_1_4')))
-          # Scale 1:8
-          self.filepaths['3D_LABEL']['1_8'] += sorted(glob(os.path.join(sequence, 'voxels', '*.label_1_8')))
-          self.filepaths['3D_INVALID']['1_8'] += sorted(glob(os.path.join(sequence, 'voxels', '*.invalid_1_8')))
+           
+         
 
-      if modality == '3D_OCCLUDED':
-        self.filepaths['3D_OCCLUDED'] = []
-        for sequence in sequences:
-          assert len(os.listdir(sequence)) > 0, 'Error, No files in sequence: {}'.format(sequence)
-          self.filepaths['3D_OCCLUDED'] += sorted(glob(os.path.join(sequence, 'voxels', '*.occluded')))
-
-    if modality == '3D_OCCUPANCY':
-      self.filepaths['3D_OCCUPANCY'] = []
-      for sequence in sequences:
-        assert len(os.listdir(sequence)) > 0, 'Error, No files in sequence: {}'.format(sequence)
-        self.filepaths['3D_OCCUPANCY'] += sorted(glob(os.path.join(sequence, 'voxels', '*.bin')))
-
-    # if modality == '3D_OCCUPANCY':
-    #   self.filepaths['3D_OCCUPANCY'] = []
-    #   specified_bin_file = '/root/datasets/semantic_kitti/dataset/sequences/00/voxels/000005.bin'
-    #   self.filepaths['3D_OCCUPANCY'].append(specified_bin_file)
+      # Combine the dataset path, file pattern (e.g., '*.bin') and sort the resulting list
+      #self.filepaths['3D_OCCUPANCY'] = sorted(glob(os.path.join(dataset_dir, file_pattern)))
+      #print(self.filepaths['3D_OCCUPANCY'])
       
-    # if modality == '2D_RGB':
-    #   self.filepaths['2D_RGB'] = []
-    #   for sequence in sequences:
-    #     assert len(os.listdir(sequence)) > 0, 'Error, No files in sequence: {}'.format(sequence)
-    #     self.filepaths['2D_RGB'] += sorted(glob(os.path.join(sequence, 'image_2', '*.png')))[::5]
 
-    return
 
   def check_same_nbr_files(self):
     '''
@@ -119,9 +106,6 @@ class SemanticKITTI_dataloader(Dataset):
     return
 
   def __getitem__(self, idx):
-    '''
-
-    '''
 
     data = {}
 
@@ -139,6 +123,10 @@ class SemanticKITTI_dataloader(Dataset):
 
     if modality == '3D_OCCUPANCY':
       OCCUPANCY = SemanticKittiIO._read_occupancy_SemKITTI(self.filepaths[modality][idx])
+      # print(OCCUPANCY.reshape([self.grid_dimensions[0],
+      #                                            self.grid_dimensions[2],
+      #                                            self.grid_dimensions[1]]).shape)
+      
       OCCUPANCY = np.moveaxis(OCCUPANCY.reshape([self.grid_dimensions[0],
                                                  self.grid_dimensions[2],
                                                  self.grid_dimensions[1]]), [0, 1, 2], [0, 2, 1])
@@ -159,15 +147,6 @@ class SemanticKITTI_dataloader(Dataset):
                                                self.grid_dimensions[1]]), [0, 1, 2], [0, 2, 1])
       OCCLUDED = SemanticKittiIO.data_augmentation_3Dflips(flip, OCCLUDED)
       return OCCLUDED
-
-    # elif modality == '2D_RGB':
-    #   RGB = SemanticKittiIO._read_rgb_SemKITTI(self.filepaths[modality][idx])
-    #   # TODO Standarize, Normalize
-    #   RGB = SemanticKittiIO.img_normalize(RGB, self.rgb_mean, self.rgb_std)
-    #   RGB = np.moveaxis(RGB, (0, 1, 2), (1, 2, 0)).astype(dtype='float32')  # reshaping [3xHxW]
-    #   # There is a problem on the RGB images.. They are not all the same size and I used those to calculate the mapping
-    #   # for the sketch... I need images all te same size..
-    #   return RGB
 
     else:
       assert False, 'Specified modality not found'

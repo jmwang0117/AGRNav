@@ -27,6 +27,7 @@
 #define _SDF_MAP_H
 
 #include <Eigen/Eigen>
+#include <unordered_set>
 #include <Eigen/StdVector>
 #include <cv_bridge/cv_bridge.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -37,7 +38,7 @@
 #include <ros/ros.h>
 #include <tuple>
 #include <visualization_msgs/Marker.h>
-
+#include <std_msgs/Float64MultiArray.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -172,10 +173,19 @@ struct MappingData {
 
 class SDFMap {
 public:
+  double robot_radius_;
+  Eigen::Vector3d robot_pose_;
+
   SDFMap() {}
   ~SDFMap() {}
 
   enum { POSE_STAMPED = 1, ODOMETRY = 2, INVALID_IDX = -10000 };
+ 
+
+  //void OCNetQuery(int x, int y, int z); 
+  void OCNetQuery(int x, int y, int z, bool is_occupied);
+  void OccRemappingCallback(const std_msgs::Float64MultiArray::ConstPtr& msg);
+  std::set<int> subscribed_occupied_addresses;
 
   // occupancy map management
   void resetBuffer();
@@ -195,6 +205,7 @@ public:
   inline int getOccupancy(Eigen::Vector3i id);
   inline int getInflateOccupancy(Eigen::Vector3d pos);
   inline int getGroundOccupancy();
+
 
   inline void boundIndex(Eigen::Vector3i& id);
   inline bool isUnknown(const Eigen::Vector3i& id);
@@ -244,7 +255,8 @@ private:
   ros::Time latest_odom_time_;
   template <typename F_get_val, typename F_set_val>
   void fillESDF(F_get_val f_get_val, F_set_val f_set_val, int start, int end, int dim);
-
+  // Add this member variable to your class to store occupied center addresses
+  std::unordered_set<int> occupied_centers;
   // get depth image and camera pose
   void depthPoseCallback(const sensor_msgs::ImageConstPtr& img,
                          const geometry_msgs::PoseStampedConstPtr& pose);
@@ -286,6 +298,9 @@ private:
   SynchronizerImagePose sync_image_pose_;
   SynchronizerImageOdom sync_image_odom_;
 
+  std::set<int> non_intersection_addresses_;
+  std::vector<int> non_intersection_coordinates_;
+  ros::Subscriber occ_update_coords_;
   ros::Subscriber indep_depth_sub_, indep_odom_sub_, indep_pose_sub_, indep_cloud_sub_;
   ros::Publisher map_pub_, esdf_pub_, map_inf_pub_, update_range_pub_;
   ros::Publisher unknown_pub_, depth_pub_, ground_pub_, obstacle_pub_;

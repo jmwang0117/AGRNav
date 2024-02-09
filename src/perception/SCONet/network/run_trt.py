@@ -14,18 +14,18 @@ repo_path, _ = os.path.split(os.path.realpath(__file__))
 repo_path, _ = os.path.split(repo_path)
 sys.path.append(repo_path)
 
-from network.common.seed import seed_all
-from network.common.config import CFG
-from network.common.dataset import get_dataset
-from network.common.io_tools import dict_to, _create_directory
-from network.common.logger import get_logger
+from OCNet.common.seed import seed_all
+from OCNet.common.config import CFG
+from OCNet.common.dataset import get_dataset
+from OCNet.common.io_tools import dict_to, _create_directory
+from OCNet.common.logger import get_logger
 
 def parse_args():
-  parser = argparse.ArgumentParser(description='SCONet validating')
+  parser = argparse.ArgumentParser(description='OCNet validating')
   parser.add_argument(
     '--weights',
     dest='weights_file',
-    default='/root/LMSCNet/weight/LMSCNet.pth',
+    default='/home/melodic/Aerial-Walker/src/ocnet_ros/OCNet/weight/LMSCNet.pth',
     metavar='FILE',
     help='path to folder where model.pth file is',
     type=str,
@@ -33,7 +33,7 @@ def parse_args():
   parser.add_argument(
     '--dset_root',
     dest='dataset_root',
-    default='/root/datasets/semantic_kitti',
+    default='/home/melodic/Aerial-Walker/src/oc_navigation/plan_manage/raw_data/voxels',
     metavar='DATASET',
     help='path to dataset root folder',
     type=str,
@@ -41,7 +41,7 @@ def parse_args():
   parser.add_argument(
     '--out_path',
     dest='output_path',
-    default='/root/LMSCNet/output',
+    default='/home/melodic/Aerial-Walker/src/ocnet_ros/OCNet/output',
     metavar='OUT_PATH',
     help='path to folder where predictions will be saved',
     type=str,
@@ -154,7 +154,7 @@ def main():
   dataset = get_dataset(_cfg)['val']
 
   logger.info('=> Loading network architecture...')
-  trt_model_path = "/root/LMSCNet/weight/LMSCNet.trt"
+  trt_model_path = "/home/melodic/Aerial-Walker/src/ocnet_ros/OCNet/weight/LMSCNet.trt"
   
 
 

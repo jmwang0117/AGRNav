@@ -1,0 +1,11 @@
+<launch>
+  <arg name="weights_file" default="/root/AGRNav/src/perception/SCONet/network/weights/weights_epoch_074.pth" />
+  <arg name="dataset_root" default="/root/AGRNav/src/planner/plan_manage/raw_data/voxels" />
+  <arg name="output_path" default="/root/AGRNav/src/perception/SCONet/network/output" />
+
+  <node name="inference_ros" pkg="perception" type="inference_ros.py" output="screen">
+    <param name="weights_file" value="$(arg weights_file)" />
+    <param name="dataset_root" value="$(arg dataset_root)" />
+    <param name="output_path" value="$(arg output_path)" />
+  </node>
+</launch>

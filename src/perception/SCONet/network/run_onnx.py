@@ -11,17 +11,17 @@ repo_path, _ = os.path.split(os.path.realpath(__file__))
 repo_path, _ = os.path.split(repo_path)
 sys.path.append(repo_path)
 
-from network.common.seed import seed_all
-from network.common.config import CFG
-from network.common.dataset import get_dataset
-from network.common.model import get_model
-from network.common.logger import get_logger
-from network.common.io_tools import dict_to, _create_directory
-import network.common.checkpoint as checkpoint
+from LMSCNet.common.seed import seed_all
+from LMSCNet.common.config import CFG
+from LMSCNet.common.dataset import get_dataset
+from LMSCNet.common.model import get_model
+from LMSCNet.common.logger import get_logger
+from LMSCNet.common.io_tools import dict_to, _create_directory
+import LMSCNet.common.checkpoint as checkpoint
 
 
 def parse_args():
-  parser = argparse.ArgumentParser(description='SCONet validating')
+  parser = argparse.ArgumentParser(description='LMSCNet validating')
   parser.add_argument(
     '--weights',
     dest='weights_file',
