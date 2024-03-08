@@ -4,6 +4,7 @@
 </div>
 
 ## News
+- [2024/03]: We will release  [HE-Nav](https://github.com/jmwang0117/HE-Nav), a more efficient, energy-saving and ESDF-free navigation system.
 - [2024/01]: AGRNav is accepted to ICRA 2024.
 - [2023/11]: The code for training [SCONet](https://github.com/jmwang0117/SCONet) is in another repository.
 - [2023/10]: Our SCONet [model](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/u3009632_connect_hku_hk/ERcBqaBqJRtOm4biZ-nXRlUBAUq0AhdEwy4yagrD7ZCCow?e=vzmmEU) can be downloaded through OneDrive.
