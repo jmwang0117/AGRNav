@@ -1,3 +1,0 @@
-<launch>
-  <node pkg="plan_manage" type="pointcloud_listener.py" name="pointcloud_listener" output="screen"/>
-</launch>

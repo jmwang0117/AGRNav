@@ -12,8 +12,8 @@ scan_count = 0
 
 class PointCloudListener:
     def __init__(self):
-        self.input_folder = '/root/AGRNav/src/planner/plan_manage/raw_data/velodyne'
-        self.output_folder = '/root/AGRNav/src/planner/plan_manage/raw_data/voxels'
+        self.input_folder = '/root/AGRNav/src/perception/raw_data/velodyne'
+        self.output_folder = '/root/AGRNav/src/perception/raw_data/voxels'
         self.grid_size = (256, 256, 32)
         self.voxelizer = PointCloudVoxelization(self.input_folder, self.output_folder, self.grid_size)
         self.lock = threading.Lock()

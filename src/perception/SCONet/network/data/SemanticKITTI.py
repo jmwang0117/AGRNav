@@ -69,7 +69,7 @@ class SemanticKITTI_dataloader(Dataset):
       if modality == '3D_OCCUPANCY':
           self.filepaths['3D_OCCUPANCY'] = []  # Clear the file paths before each iteration
           
-          dataset_dir =  "/root/AGRNav/src/planner/plan_manage/raw_data/voxels"
+          dataset_dir =  "/root/AGRNav/src/perception/raw_data/voxels"
           file_pattern = '*.bin'
 
           # Get all file paths in the directory and sort them
@@ -77,7 +77,7 @@ class SemanticKITTI_dataloader(Dataset):
           # import pdb
           # pdb.set_trace()
           # Only consider the first batch_size files
-          batch_size = 6
+          batch_size = 1
           self.filepaths['3D_OCCUPANCY'] = filepaths[:batch_size]
           
           # Remove the processed files from the list

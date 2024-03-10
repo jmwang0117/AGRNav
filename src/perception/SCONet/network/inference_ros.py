@@ -112,9 +112,9 @@ def test(model, dset, _cfg, logger, out_path_root, coordinates_publisher):
                 out_filename = os.path.join(out_path_root, 'predictions', filename + '.label')
                 _create_directory(os.path.dirname(out_filename))
                 score.tofile(out_filename)
-                # shutil.copy(input_filename, ori_voxels_path)
+                #shutil.copy(input_filename, ori_voxels_path)
                 os.remove(input_filename)
-                curr_index += 1
+                # curr_index += 1
   
     
     return inference_time
@@ -123,8 +123,9 @@ def test(model, dset, _cfg, logger, out_path_root, coordinates_publisher):
 def main():
     rospy.init_node("inference_node")
     #Create the publisher using a specific ROS message type and topic
-    coordinates_publisher = rospy.Publisher('/non_intersection_coordinates', Float64MultiArray, queue_size=1000)  
-    torch.backends.cudnn.enabled = False
+    coordinates_publisher = rospy.Publisher('/non_intersection_coordinates', Float64MultiArray, queue_size=1000) 
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu') 
+    torch.backends.cudnn.enabled = True
     seed_all(0)   
     weights_f = rospy.get_param('~weights_file')
     dataset_f = rospy.get_param('~dataset_root')
@@ -137,30 +138,33 @@ def main():
     _cfg.from_dict(config_dict)
     logger = get_logger(out_path_root, 'logs_test.log')
     logger.info('============ Test weights: "%s" ============\n' % weights_f)    
-    wait_time = 2  # Seconds to wait before checking the dataset folder again
-    train_batch_size = 6  # Set your desired batch_size here
+    wait_time = 1  # Seconds to wait before checking the dataset folder again
+    train_batch_size = 1  # Set your desired batch_size here
     while not rospy.is_shutdown():      
         dataset = None
+        
         while dataset is None:
-            # Check if the dataset folder has sufficient data (files) for the batch size
             dataset_files = os.listdir(dataset_f)
+            
+            
+            # Check if the dataset folder has sufficient data (files) for the batch size
             if len(dataset_files) >= train_batch_size:
                 dataset = get_dataset(_cfg)['test']
+                break
             else:
                 rospy.loginfo("Waiting for dataset folder to accumulate sufficient files.")
                 rospy.sleep(wait_time)
         # dataset = get_dataset(_cfg)['test']
         logger.info('=> Loading network architecture...')
         model = get_model(_cfg, dataset.dataset)
-        if torch.cuda.device_count() > 1:
-            model = nn.DataParallel(model)
-            model = model.module
+        
         logger.info('=> Loading network weights...')
+        model = model.to(device=device)
         model = checkpoint.load_model(model, weights_f, logger)
         rate = rospy.Rate(10)  
         inference_time = test(model, dataset, _cfg, logger, out_path_root, coordinates_publisher)  
         logger.info('=> ============ Network Test Done ============')
-        logger.info('Inference time per frame is %.1f seconds\n' % (np.sum(inference_time) / 6.0))
+        logger.info('Inference time per frame is %.6f seconds\n' % (np.sum(inference_time) / 1.0))
         rate.sleep()
 
 if __name__ == '__main__':

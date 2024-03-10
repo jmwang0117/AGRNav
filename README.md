@@ -1,5 +1,5 @@
 <div align="center">   
-  
+
 # AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments
 </div>
 
@@ -13,6 +13,19 @@
 
 </br>
 
+If you find this work helpful, kindly show your support by giving us a free ⭐️. Your recognition is truly valued.
+
+If you find this work useful in your research, please consider citing:
+```
+@inproceedings{jmwang,
+  title={AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments},
+  author={Wang, Junming and Guan, Xiuxian and Sun, Zekai and Shen, Tianxiang and Zhang, Zongyuan and Duan, Tianyang and Huang, Dong and Zhao, Shixiong and Cui, Heming},
+  booktitle={2024 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={},
+  year={2024},
+  organization={IEEE}
+}
+```
 ## Installation
 The code was tested with `python=3.6.9`, as well as `pytorch=1.10.0+cu111` and `torchvision=0.11.2+cu111`. 
 
@@ -43,6 +56,17 @@ Please follow the instructions [here](https://pytorch.org/get-started/locally/) 
  apt update && sudo apt-get install libarmadillo-dev ros-melodic-nlopt
 
 ```
+
+6. Since need to temporarily save the point cloud, please modify the path in the following file:
+```
+/root/AGRNav/src/perception/launch/inference.launch
+
+/root/AGRNav/src/perception/SCONet/network/data/SemanticKITTI.py
+
+/root/AGRNav/src/perception/script/pointcloud_listener.py
+```
+
+
 ## Run the following commands 
 ```
 pip install pyyaml
@@ -59,9 +83,6 @@ You've begun this project successfully; **enjoy yourself!**
 ## Dataset
 
 - [x] SemanticKITTI
-
-
-
 
 ## Acknowledgement
 
