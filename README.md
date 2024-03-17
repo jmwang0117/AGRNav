@@ -16,6 +16,10 @@
 
 If you find this work helpful, kindly show your support by giving us a free ⭐️. Your recognition is truly valued.
 
+<p align = "center">
+<img src="figs/sim1.gif" width = "700" height = "400" border="3" />
+</p>
+
 If you find this work useful in your research, please consider citing:
 ```
 @inproceedings{jmwang,
