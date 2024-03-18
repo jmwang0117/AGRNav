@@ -17,7 +17,8 @@
 If you find this work helpful, kindly show your support by giving us a free ⭐️. Your recognition is truly valued.
 
 <p align = "center">
-<img src="figs/sim1.gif" width = "400" height = "260" border="1" />
+  <img src="figs/sim1.gif" width = "400" height = "260" border="1" style="display:inline;"/>
+  <img src="figs/AGR.gif" width = "400" height = "260" border="1" style="display:inline;"/>
 </p>
 
 If you find this work useful in your research, please consider citing:
