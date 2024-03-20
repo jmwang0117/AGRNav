@@ -1,6 +1,7 @@
 <div align="center">   
 
 # AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments
+
 </div>
 
 ## News
@@ -18,7 +19,7 @@ If you find this work helpful, kindly show your support by giving us a free ‚≠êÔ
 
 <p align = "center">
   <img src="figs/sim1.gif" width = "400" height = "260" border="1" style="display:inline;"/>
-  <img src="figs/AGR.gif" width = "400" height = "260" border="1" style="display:inline;"/>
+  
 </p>
 
 If you find this work useful in your research, please consider citing:
@@ -57,13 +58,14 @@ Please follow the instructions [here](https://pytorch.org/get-started/locally/) 
 ```
  docker exec -it robot bash
 ```
-5. Then catkin_make compiles this project
-```
- apt update && sudo apt-get install libarmadillo-dev ros-melodic-nlopt
+
+5. Re-clone the repository locally
 
 ```
+ git clone https://github.com/jmwang0117/AGRNav.git
+```
 
-6. Since need to temporarily save the point cloud, please modify the path in the following file:
+6. Since need to temporarily save the point cloud, please check the path in the following file:
 ```
 /root/AGRNav/src/perception/launch/inference.launch
 
@@ -72,12 +74,22 @@ Please follow the instructions [here](https://pytorch.org/get-started/locally/) 
 /root/AGRNav/src/perception/script/pointcloud_listener.py
 ```
 
-
-## Run the following commands 
+7. Download the SCONet pre-trained model to the folder below
 ```
-pip install pyyaml
-pip install rospkg
-pip install imageio
+/root/AGRNav/src/perception/SCONet/network/weights
+```
+8. If you want to use our 3D model, please download the model to the folder below
+```
+/root/AGRNav/src/uav_simulator/Utils/odom_visualization/meshes
+```
+
+And modify the code on line 503 in the following file to AGR.dae
+```
+/home/jmwang/AGRNav/src/uav_simulator/Utils/odom_visualization/src/odom_visualization.cpp
+```
+
+9. Run the following commands 
+```
 catkin_make
 source devel/setup.bash
 sh src/run.sh

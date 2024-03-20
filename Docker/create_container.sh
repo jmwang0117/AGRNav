@@ -9,7 +9,6 @@ docker create -t --name robot --runtime nvidia  -e NVIDIA_VISIBLE_DEVICES=all \
     --privileged \
     --shm-size 8G \
     -v /dev:/dev \
-    -v /home/jmwang/datasets:/datasets \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $XAUTHORITY:$XAUTHORITY \
-    bdca6ce0f1a3 bash
+    skywalker_robot bash

@@ -1,0 +1,1 @@
+ docker build . -t skywalker_robot -f Dockerfile
