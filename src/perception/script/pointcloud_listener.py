@@ -65,7 +65,7 @@ class PointCloudListener:
         rospy.init_node('pointcloud_listener', anonymous=True)
         topic = "/sdf_map/occupancy_inflate"  # Replace with the desired topic name
         rospy.Subscriber(topic, PointCloud2, self.callback)
-        rospy.Timer(rospy.Duration(2), self.timer_callback)
+        rospy.Timer(rospy.Duration(0.55), self.timer_callback)
         rospy.spin()
 
 if __name__ == '__main__':

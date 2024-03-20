@@ -114,4 +114,6 @@ class PointCloudVoxelization:
                 # Print the file name and occupied voxels count
                 print(f"File: {file_name}, Occupied voxels: {occupied_voxels_count}")
                 
+                os.remove(input_path)
+                
                 

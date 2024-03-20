@@ -104,14 +104,14 @@ def test(model, dset, _cfg, logger, out_path_root, coordinates_publisher):
 
                 publish_coordinates(non_intersection_coordinates, coordinates_publisher)
                 
-                score = np.moveaxis(score, [0, 1, 2], [0, 2, 1]).reshape(-1).astype(np.uint16)
-                score = inv_remap_lut[score].astype(np.uint16)
+                # score = np.moveaxis(score, [0, 1, 2], [0, 2, 1]).reshape(-1).astype(np.uint16)
+                # score = inv_remap_lut[score].astype(np.uint16)
                 
               
-                filename, extension = os.path.splitext(os.path.basename(input_filename))
-                out_filename = os.path.join(out_path_root, 'predictions', filename + '.label')
-                _create_directory(os.path.dirname(out_filename))
-                score.tofile(out_filename)
+                # filename, extension = os.path.splitext(os.path.basename(input_filename))
+                # out_filename = os.path.join(out_path_root, 'predictions', filename + '.label')
+                # _create_directory(os.path.dirname(out_filename))
+                # score.tofile(out_filename)
                 #shutil.copy(input_filename, ori_voxels_path)
                 os.remove(input_filename)
                 # curr_index += 1
@@ -138,22 +138,25 @@ def main():
     _cfg.from_dict(config_dict)
     logger = get_logger(out_path_root, 'logs_test.log')
     logger.info('============ Test weights: "%s" ============\n' % weights_f)    
-    wait_time = 1  # Seconds to wait before checking the dataset folder again
+    wait_time = 0.4  # Seconds to wait before checking the dataset folder again
     train_batch_size = 1  # Set your desired batch_size here
-    while not rospy.is_shutdown():      
-        dataset = None
+    while not rospy.is_shutdown(): 
+        rospy.sleep(wait_time)
+        dataset = get_dataset(_cfg)['test']
+             
+        # dataset = None
         
-        while dataset is None:
-            dataset_files = os.listdir(dataset_f)
+        # while dataset is None:
+        #     dataset_files = os.listdir(dataset_f)
             
             
-            # Check if the dataset folder has sufficient data (files) for the batch size
-            if len(dataset_files) >= train_batch_size:
-                dataset = get_dataset(_cfg)['test']
-                break
-            else:
-                rospy.loginfo("Waiting for dataset folder to accumulate sufficient files.")
-                rospy.sleep(wait_time)
+        #     # Check if the dataset folder has sufficient data (files) for the batch size
+        #     if len(dataset_files) >= train_batch_size:
+        #         dataset = get_dataset(_cfg)['test']
+        #         break
+        #     else:
+        #         rospy.loginfo("Waiting for dataset folder to accumulate sufficient files.")
+        #         rospy.sleep(wait_time)
         # dataset = get_dataset(_cfg)['test']
         logger.info('=> Loading network architecture...')
         model = get_model(_cfg, dataset.dataset)
@@ -164,7 +167,10 @@ def main():
         rate = rospy.Rate(10)  
         inference_time = test(model, dataset, _cfg, logger, out_path_root, coordinates_publisher)  
         logger.info('=> ============ Network Test Done ============')
-        logger.info('Inference time per frame is %.6f seconds\n' % (np.sum(inference_time) / 1.0))
+        average_inference_time = np.sum(inference_time) / 1.0
+        fps = 1 / average_inference_time
+        logger.info('Inference time per frame is %.6f seconds\n' % average_inference_time)
+        logger.info('FPS: %.2f\n' % fps)
         rate.sleep()
 
 if __name__ == '__main__':
