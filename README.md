@@ -77,14 +77,14 @@ Please follow the instructions [here](https://pytorch.org/get-started/locally/) 
 ```
 /root/AGRNav/src/perception/SCONet/network/weights
 ```
-8. If you want to use our 3D model, please download the model to the folder below
+8. If you want to use our 3D AGR model, please download the AGR model to the folder below
 ```
 /root/AGRNav/src/uav_simulator/Utils/odom_visualization/meshes
 ```
 
 And modify the code on line 503 in the following file to AGR.dae
 ```
-/home/jmwang/AGRNav/src/uav_simulator/Utils/odom_visualization/src/odom_visualization.cpp
+/root/AGRNav/src/uav_simulator/Utils/odom_visualization/src/odom_visualization.cpp
 ```
 
 9. Run the following commands 
