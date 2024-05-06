@@ -89,35 +89,35 @@ class SCONet(nn.Module):
     self.pool = nn.MaxPool2d(2)  # [F=2; S=2; P=0; D=1]
 
     self.Encoder_block1 = nn.Sequential(
-      nn.Conv2d(f, f, kernel_size=3, padding=1, stride=1),
-      nn.ReLU(),
-      nn.Conv2d(f, f, kernel_size=3, padding=1, stride=1),
-      nn.ReLU()
-    )
+            DepthwiseSeparableConv(f, f, kernel_size=3, padding=1, stride=1),
+            nn.ReLU(),
+            DepthwiseSeparableConv(f, f, kernel_size=3, padding=1, stride=1),
+            nn.ReLU()
+        )
 
     self.Encoder_block2 = nn.Sequential(
-      nn.MaxPool2d(2),
-      nn.Conv2d(f, int(f*1.5), kernel_size=3, padding=1, stride=1),
-      nn.ReLU(),
-      nn.Conv2d(int(f*1.5), int(f*1.5), kernel_size=3, padding=1, stride=1),
-      nn.ReLU()
-    )
+            nn.MaxPool2d(2),
+            DepthwiseSeparableConv(f, int(f*1.5), kernel_size=3, padding=1, stride=1),
+            nn.ReLU(),
+            DepthwiseSeparableConv(int(f*1.5), int(f*1.5), kernel_size=3, padding=1, stride=1),
+            nn.ReLU()
+        )
 
     self.Encoder_block3 = nn.Sequential(
-      nn.MaxPool2d(2),
-      nn.Conv2d(int(f*1.5), int(f*2), kernel_size=3, padding=1, stride=1),
-      nn.ReLU(),
-      nn.Conv2d(int(f*2), int(f*2), kernel_size=3, padding=1, stride=1),
-      nn.ReLU()
-    )
+            nn.MaxPool2d(2),
+            DepthwiseSeparableConv(int(f*1.5), int(f*2), kernel_size=3, padding=1, stride=1),
+            nn.ReLU(),
+            DepthwiseSeparableConv(int(f*2), int(f*2), kernel_size=3, padding=1, stride=1),
+            nn.ReLU()
+        )
 
     self.Encoder_block4 = nn.Sequential(
-      nn.MaxPool2d(2),
-      nn.Conv2d(int(f*2), int(f*2.5), kernel_size=3, padding=1, stride=1),
-      nn.ReLU(),
-      nn.Conv2d(int(f*2.5), int(f*2.5), kernel_size=3, padding=1, stride=1),
-      nn.ReLU()
-    )
+            nn.MaxPool2d(2),
+            DepthwiseSeparableConv(int(f*2), int(f*2.5), kernel_size=3, padding=1, stride=1),
+            nn.ReLU(),
+            DepthwiseSeparableConv(int(f*2.5), int(f*2.5), kernel_size=3, padding=1, stride=1),
+            nn.ReLU()
+        )
 
     self.criss_cross_attention = CrissCrossAttention(int(f*2.5))
     self.Attention_block_1_8 = MobileViTv2Attention(4, 64, 64)
@@ -188,9 +188,19 @@ class SCONet(nn.Module):
     return scores
 
   def weights_initializer(self, m):
-    if isinstance(m, nn.Conv2d):
-      nn.init.kaiming_uniform_(m.weight)
-      nn.init.zeros_(m.bias)
+    if isinstance(m, nn.Conv2d) or isinstance(m, nn.Conv3d):
+        nn.init.kaiming_uniform_(m.weight, nonlinearity='relu')
+        if m.bias is not None:
+            nn.init.zeros_(m.bias)
+    elif isinstance(m, DepthwiseSeparableConv):
+        # 初始化Depthwise卷积层
+        nn.init.kaiming_uniform_(m.depthwise_conv.weight, nonlinearity='relu')
+        if m.depthwise_conv.bias is not None:
+            nn.init.zeros_(m.depthwise_conv.bias)
+        # 初始化Pointwise卷积层
+        nn.init.kaiming_uniform_(m.pointwise_conv.weight, nonlinearity='relu')
+        if m.pointwise_conv.bias is not None:
+            nn.init.zeros_(m.pointwise_conv.bias)
 
   def weights_init(self):
     self.apply(self.weights_initializer)
