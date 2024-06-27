@@ -96,10 +96,7 @@ You've begun this project successfully; **enjoy yourself!**
 
 - [x] SemanticKITTI
 
-## 🤗 AGR-family Works
 
-* [OMEGA](https://jmwang0117.github.io/OMEGA/) (Submitted to RA-L'24): The First Aerial-Ground Robot Navigation System in Dynamic Environments.
-* [AGRNav](https://github.com/jmwang0117/AGRNav) (ICRA'24): The First Aerial-Ground Robot Navigation System with Occlusion Awareness.
 
 ## Acknowledgement
 
