@@ -21,13 +21,11 @@ If you find this work helpful, kindly show your support by giving us a free ‚≠êÔ
 
 If you find this work useful in your research, please consider citing:
 ```
-@inproceedings{jmwang,
+@article{wang2024agrnav,
   title={AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments},
   author={Wang, Junming and Sun, Zekai and Guan, Xiuxian and Shen, Tianxiang and Zhang, Zongyuan and Duan, Tianyang and Huang, Dong and Zhao, Shixiong and Cui, Heming},
-  booktitle={2024 IEEE International Conference on Robotics and Automation (ICRA)},
-  pages={},
-  year={2024},
-  organization={IEEE}
+  journal={arXiv preprint arXiv:2403.11607},
+  year={2024}
 }
 ```
 ## Installation
