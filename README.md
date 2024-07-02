@@ -1,10 +1,10 @@
 <div align="center">   
 
-# AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments
+# 🤖 AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments
 
 </div>
 
-## News
+## 📢 News
 - [2024/01]: AGRNav is accepted to ICRA 2024.
 - [2023/11]: The code for training [SCONet](https://github.com/jmwang0117/SCONet) is in another repository.
 - [2023/09]: The [3D model ](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/u3009632_connect_hku_hk/ERX7ejbV3xdOkLQe5SMgGG0Bh6D1qGd-9vg5iMWpi8VQsw?e=H07haj) in the simulation environment can be downloaded in OneDrive.
@@ -28,7 +28,7 @@ If you find this work useful in your research, please consider citing:
   year={2024}
 }
 ```
-## Installation
+## 🛠️ Installation
 The code was tested with `python=3.6.9`, as well as `pytorch=1.10.0+cu111` and `torchvision=0.11.2+cu111`. 
 
 Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended.
@@ -92,13 +92,13 @@ sh src/run.sh
 You've begun this project successfully; **enjoy yourself!**
 
 
-## Dataset
+## 💽 Dataset
 
 - [x] SemanticKITTI
 
 
 
-## Acknowledgement
+## 🏆 Acknowledgement
 
 Many thanks to these excellent open source projects:
 - [Prometheus](https://github.com/amov-lab/Prometheus)
