@@ -4,6 +4,13 @@
 
 </div>
 
+## 🤗 AGR-Family Works
+
+* [OMEGA](https://jmwang0117.github.io/OMEGA/) (RA-L 2024.12): The First AGR-Tailored Dynamic Navigation System.
+* [HE-Nav](https://jmwang0117.github.io/HE-Nav/) (RA-L 2024.09): The First AGR-Tailored ESDF-Free Navigation System.
+* [AGRNav](https://github.com/jmwang0117/AGRNav) (ICRA 2024.01): The First AGR-Tailored Occlusion-Aware Navigation System.
+
+
 ## 📢 News
 - [2024/01]: AGRNav is accepted to ICRA 2024.
 - [2023/11]: The code for training [SCONet](https://github.com/jmwang0117/SCONet) is in another repository.
