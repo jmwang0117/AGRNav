@@ -33,8 +33,6 @@ If you find this work useful in your research, please consider citing:
   booktitle={2024 IEEE International Conference on Robotics and Automation (ICRA)}, 
   title={AGRNav: Efficient and Energy-Saving Autonomous Navigation for Air-Ground Robots in Occlusion-Prone Environments}, 
   year={2024},
-  volume={},
-  number={},
   pages={11133-11139}
 }
 ```
