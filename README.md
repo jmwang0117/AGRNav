@@ -4,7 +4,7 @@
 
 </div>
 
-## 🎉 Chinese Media Reports
+## 🎉 Chinese Media Reports/Interpretations
 * [AMOV Lab Research Scholarship](https://mp.weixin.qq.com/s/AXbW3LDgsl9knQBIMwIpvA) -- 2024.11: 5000 RMB
 * [AMOV Lab Research Scholarship](https://mp.weixin.qq.com/s/PUwY04sMpVmz30kSn6XdzQ) -- 2024.10: 5000 RMB
   
