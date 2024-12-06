@@ -4,16 +4,16 @@
 
 </div>
 
-## 🎉 Chinese Media Reports/Interpretations
-* [AMOV Lab Research Scholarship](https://mp.weixin.qq.com/s/AXbW3LDgsl9knQBIMwIpvA) -- 2024.11: 5000 RMB
-* [AMOV Lab Research Scholarship](https://mp.weixin.qq.com/s/PUwY04sMpVmz30kSn6XdzQ) -- 2024.10: 5000 RMB
-  
 ## 🤗 AGR-Family Works
 
 * [OMEGA](https://jmwang0117.github.io/OMEGA/) (RA-L 2024.12): The First AGR-Tailored Dynamic Navigation System.
 * [HE-Nav](https://jmwang0117.github.io/HE-Nav/) (RA-L 2024.09): The First AGR-Tailored ESDF-Free Navigation System.
 * [AGRNav](https://github.com/jmwang0117/AGRNav) (ICRA 2024.01): The First AGR-Tailored Occlusion-Aware Navigation System.
 
+## 🎉 Chinese Media Reports/Interpretations
+* [AMOV Lab Research Scholarship](https://mp.weixin.qq.com/s/AXbW3LDgsl9knQBIMwIpvA) -- 2024.11: 5000 RMB
+* [AMOV Lab Research Scholarship](https://mp.weixin.qq.com/s/PUwY04sMpVmz30kSn6XdzQ) -- 2024.10: 5000 RMB
+  
 
 ## 📢 News
 - [2024/01]: AGRNav is accepted to ICRA 2024.
@@ -40,6 +40,27 @@ If you find this work useful in your research, please consider citing:
   pages={11133-11139}
 }
 ```
+
+## 🔧 Hardware List
+
+<div align="center">
+
+| Hardware | Link |
+|:------------------:|:----------:|
+| AMOV Lab P600 UAV | [link](https://www.amovlab.com/product/detail?pid=76) |
+| AMOV Lab Allapark1-Jetson Xavier NX | [link](https://www.amovlab.com/product/detail?pid=77) |
+| Wheeltec R550 ROS Car | [link](https://lubancat.wheeltec.net/zh-cn/main/neirong/01%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D/01%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D.html) |
+| Intel RealSense D435i | [link](https://www.intelrealsense.com/depth-camera-d435i/) |
+| Intel RealSense T265 | [link](https://www.intelrealsense.com/visual-inertial-tracking-case-study/) |
+| TFmini Plus | [link](https://en.benewake.com/TFminiPlus/index_proid_323.html) |
+
+</div>
+
+❗ Considering that visual positioning is prone to drift in the Z-axis direction, we added TFmini Plus for height measurement. Additionally, **GNSS-RTK positioning** is recommended for better localization accuracy.
+
+🤑 Our customized Aerial-Ground Robot cost about **RMB 70,000**.
+
+
 ## 🛠️ Installation
 The code was tested with `python=3.6.9`, as well as `pytorch=1.10.0+cu111` and `torchvision=0.11.2+cu111`. 
 
