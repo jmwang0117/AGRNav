@@ -6,6 +6,7 @@
 
 ## 🤗 AGR-Family Works
 
+* [OccRWKV](https://jmwang0117.github.io/OccRWKV/) (ICRA 2025.01): The First RWKV-based 3D Semantic Occupancy Network
 * [OMEGA](https://jmwang0117.github.io/OMEGA/) (RA-L 2024.12): The First AGR-Tailored Dynamic Navigation System.
 * [HE-Nav](https://jmwang0117.github.io/HE-Nav/) (RA-L 2024.09): The First AGR-Tailored ESDF-Free Navigation System.
 * [AGRNav](https://github.com/jmwang0117/AGRNav) (ICRA 2024.01): The First AGR-Tailored Occlusion-Aware Navigation System.
